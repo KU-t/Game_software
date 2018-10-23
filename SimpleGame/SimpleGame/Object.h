@@ -26,18 +26,12 @@ public:
 
 private:
 	//Variables
-	float m_PosX;
-	float m_PosY;
-	float m_PosZ;
-	float m_SizeWidth;
-	float m_SizeHeight;
-	float m_VelX;
-	float m_VelY;
-	float m_AccX;
-	float m_AccY;
+	float m_PosX, m_PosY, m_PosZ;
+	float m_SizeWidth, m_SizeHeight;
+	float m_VelX, m_VelY;
+	float m_AccX, m_AccY;
 
-	float m_ForX;
-	float m_ForY;
+	float m_ForX, m_ForY;
 
 	float m_Mass;
 

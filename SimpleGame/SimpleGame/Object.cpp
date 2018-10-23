@@ -159,7 +159,7 @@ void Object::ApplyForce(float x, float y, float eTime) {
 	m_AccX = 0.f;
 	m_AccY = 0.f;
 
-	m_PosX = m_PosX + m_VelX * elapsedTime;
-	m_PosY = m_PosY + m_VelY * elapsedTime;
+	//m_PosX = m_PosX + m_VelX * elapsedTime;
+	//m_PosY = m_PosY + m_VelY * elapsedTime;
 
 }
