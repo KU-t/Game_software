@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ii%29 Object">
+      <UniqueIdentifier>{b1d261da-bda8-42af-9a80-d4ef679b9dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="i%29 SimpleGame">
+      <UniqueIdentifier>{47892c94-a45a-4d0c-9a66-7a19bdc04670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="iv%29 Renderer">
+      <UniqueIdentifier>{9b51b0bd-cbdb-4bcc-9634-0af4bf4d2288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="iii%29 ScnMgr">
+      <UniqueIdentifier>{b9f9a7b5-5bac-4d5c-8b94-b3960aa0726b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="v%29 LoadPng">
+      <UniqueIdentifier>{dc64a76b-5ac9-4557-888b-39610cfdb628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일\Shaders">
+      <UniqueIdentifier>{aa86e47f-445f-4440-9a76-173363b46c4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LoadPng.h">
+      <Filter>v%29 LoadPng</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>ii%29 Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>iv%29 Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ScnMgr.h">
+      <Filter>iii%29 ScnMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>i%29 SimpleGame</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>i%29 SimpleGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LoadPng.cpp">
+      <Filter>v%29 LoadPng</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleGame.cpp">
+      <Filter>i%29 SimpleGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>ii%29 Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>iv%29 Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="ScnMgr.cpp">
+      <Filter>iii%29 ScnMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>i%29 SimpleGame</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\SolidRect.fs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\SolidRect.vs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\TextureRect.fs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\TextureRect.vs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\TextureRectSeq.fs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="Shaders\TextureRectSeq.vs">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

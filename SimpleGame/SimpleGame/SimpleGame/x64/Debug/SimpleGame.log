@@ -1,0 +1,22 @@
+﻿  stdafx.cpp
+  LoadPng.cpp
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(800): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(1462): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(1466): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(1538): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(3483): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(3497): warning C4267: '인수': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(4338): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(4386): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(4466): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\loadpng.cpp(5409): warning C4267: '초기화 중': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Object.cpp
+c:\users\태균\desktop\simplegame\simplegame\simplegame\object.cpp(20): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\simplegame\simplegame\simplegame\object.cpp(196): warning C4244: '초기화 중': 'DWORD'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Renderer.cpp
+c:\users\태균\desktop\simplegame\simplegame\simplegame\renderer.cpp(125): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ScnMgr.cpp
+  SimpleGame.cpp
+c:\users\태균\desktop\simplegame\simplegame\simplegame\simplegame.cpp(21): warning C4244: '초기화 중': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  SimpleGame.vcxproj -> C:\Users\태균\Desktop\SimpleGame\SimpleGame\x64\Debug\SimpleGame.exe
