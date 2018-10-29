@@ -31,6 +31,8 @@ ScnMgr::ScnMgr()
 	m_Objects[HERO_ID]->SetSize(1.f, 1.f);
 	m_Objects[HERO_ID]->SetMass(1.f);
 	m_Objects[HERO_ID]->SetFrictionCoef(0.2f);
+	m_Objects[HERO_ID]->SetKind(KIND_HERO);
+
 	/*for (int i = 0; i < MAX_OBJECT; ++i)
 	{
 		x = rand() % 500;
@@ -215,5 +217,42 @@ int ScnMgr::FindObjectSlot()
 
 	cout << "objectList is full" << endl;
 	return -1;
+}
+
+void ScnMgr::Shoot(int shootID) {
+	if (shootID == SHOOT_NONE)		return;
+	float px, py, pz;
+	float sx, sy;
+	float vx, vy;
+
+//	m_Objects
+	m_Objects[HERO_ID]->Getpos(&px, &py,&pz);
+	sx = 0.1f;
+	sy = 0.1f;
+
+	m_Objects[HERO_ID]->GetVelocity(&vx, &vy);
+	// ÃÑ¾Ë¼Óµµ
+	float amount = 10.f;
+	switch (shootID){
+	case SHOOT_LEFT:
+			vx -= amount;
+			vy += amount;
+			break;
+	case SHOOT_RIGHT:
+		vx += amount;
+		vy += amount;
+		break;
+	case SHOOT_UP:
+		vx += amount;
+		vy += amount;
+		break;
+	case SHOOT_DOWN:
+		vx += amount;
+		vy -= amount;
+		break;
+	}
+
+
+	AddObject(px, py, pz, sx, sy, vx, vy);
 }
 

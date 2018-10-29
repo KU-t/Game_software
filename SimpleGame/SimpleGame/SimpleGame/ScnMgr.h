@@ -25,4 +25,6 @@ public:
 	void AddObject(float pX, float pY, float pZ, float sX, float sY, float Vx, float vY);
 	void DeleteObject(unsigned int id);
 	int FindObjectSlot();
+	void Shoot(int ShootID);
+
 };

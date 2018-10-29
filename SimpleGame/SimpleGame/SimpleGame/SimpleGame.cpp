@@ -14,17 +14,21 @@ but WITHOUT ANY WARRANTY.
 #include "Dependencies\glew.h"
 #include "Dependencies\freeglut.h"
 #include "ScnMgr.h"
+#include "Global.h"
 
 //ScnMgr* a;
 //int a;
 //int a = 50;
 DWORD g_prevElipsedTime = 0.f;
 ScnMgr *g_ScnMgr = NULL;
+
 bool g_KeyW = false;
 bool g_KeyA = false;
 bool g_KeyS = false;
 bool g_KeyD = false;
 
+// bullet
+SHOOT_ g_Shoot = SHOOT_NONE;
 
 void RenderScene(void)
 {
@@ -204,8 +208,27 @@ void KeyUpInput(unsigned char key, int x, int y)
 
 	//RenderScene();
 }
-void SpecialKeyInput(int key, int x, int y)
-{
+void SpecialKeyDownInput(int key, int x, int y){
+	switch (key){
+	case GLUT_KEY_LEFT:
+		g_Shoot = SHOOT_LEFT;
+		break;
+	case GLUT_KEY_RIGHT:
+		g_Shoot = SHOOT_RIGHT;
+		break;
+	case GLUT_KEY_UP:
+		g_Shoot = SHOOT_UP;
+		break;
+	case GLUT_KEY_DOWN:
+		g_Shoot = SHOOT_DOWN;
+		break;
+	}
+
+	RenderScene();
+}
+
+void SpecialKeyUpInput(int key, int x, int y){
+	g_Shoot = SHOOT_NONE;
 	RenderScene();
 }
 
@@ -237,7 +260,8 @@ int main(int argc, char **argv)
 	glutKeyboardFunc(KeyDownInput);
 	glutKeyboardUpFunc(KeyUpInput);
 	glutMouseFunc(MouseInput);
-	glutSpecialFunc(SpecialKeyInput);
+	glutSpecialFunc(SpecialKeyDownInput);
+	glutSpecialUpFunc(SpecialKeyUpInput);
 
 	g_ScnMgr = new ScnMgr;
 	glutMainLoop();

@@ -209,3 +209,12 @@ void Object::ApplyForce(float x, float y, DWORD eTime)
 	//m_fposY = m_fposY + m_velY * elapsedTime;
 }
 
+void Object::GetKind(int *kind){
+	*kind = m_Kind;
+}
+
+void Object::SetKind(int kind){
+	m_Kind = kind;
+}
+
+
