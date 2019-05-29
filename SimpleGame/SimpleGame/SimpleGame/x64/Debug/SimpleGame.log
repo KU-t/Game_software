@@ -1,2 +1,32 @@
-﻿  ScnMgr.cpp
-  SimpleGame.vcxproj -> C:\Users\태균\Desktop\2018-2\Game_software\Game_software\SimpleGame\SimpleGame\x64\Debug\SimpleGame.exe
+﻿  stdafx.cpp
+  LoadPng.cpp
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(800): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(1462): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(1466): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(1538): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(3483): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(3497): warning C4267: '인수': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(4338): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(4386): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(4466): warning C4267: '=': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\loadpng.cpp(5409): warning C4267: '초기화 중': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Object.cpp
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\object.cpp(16): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\object.cpp(45): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\object.cpp(70): warning C4244: '초기화 중': 'DWORD'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Renderer.cpp
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(148): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(149): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(311): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(312): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(490): warning C4267: '=': 'size_t'에서 'GLint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(1162): warning C4244: '초기화 중': 'float'에서 'GLuint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(1163): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\renderer.cpp(1232): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  ScnMgr.cpp
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\scnmgr.cpp(328): warning C4305: '인수': 'double'에서 'float'(으)로 잘립니다.
+  SimpleGame.cpp
+c:\users\태균\desktop\2019-1\game_software\simplegame\simplegame\simplegame\simplegame.cpp(19): warning C4244: '초기화 중': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Sound.cpp
+  코드를 생성하고 있습니다...
+  SimpleGame.vcxproj -> C:\Users\태균\Desktop\2019-1\Game_software\SimpleGame\SimpleGame\x64\Debug\SimpleGame.exe

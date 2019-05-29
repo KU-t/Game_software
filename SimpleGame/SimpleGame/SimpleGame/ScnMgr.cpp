@@ -1,103 +1,73 @@
 #include "stdafx.h"
 #include "ScnMgr.h"
+#include "LoadPng.h"
+#include "Global.h"
 
 float g_Time = 0;
 float temp = 10;
 int g_Seq = 0;
-ScnMgr::ScnMgr()
-{
 
-
-	//Initialize Renderer
-	/*m_TestObj = new Object();
-	m_TestObj->Setpos(0.f, 0.f, 0.5f);
-	m_TestObj->SetVelocity(0, 0);
-	m_TestObj->SetAcc(0, 0);
-	m_TestObj->SetForce(0, 0);
-	m_TestObj->SetSize(1.f, 1.f);
-	m_TestObj->SetMass(3.f);
-	m_TestObj->SetFrictionCoef(5.f);*/
-
+ScnMgr::ScnMgr(){
 	//Init Object list
 	for (int i = 0; i < MAX_OBJECT; ++i) m_Objects[i] = NULL;
-
 
 	//Create HeroObj
 	m_Objects[HERO_ID] = new Object();
 	m_Objects[HERO_ID]->Setpos(0, 0, 0.f);
-	m_Objects[HERO_ID]->SetVelocity(0, 0);
-	m_Objects[HERO_ID]->SetAcc(0, 0);
-	m_Objects[HERO_ID]->SetForce(0, 0);
-	m_Objects[HERO_ID]->SetSize(1.f, 1.f);
-	m_Objects[HERO_ID]->SetMass(1.f);
-	m_Objects[HERO_ID]->SetFrictionCoef(0.2f);
+	m_Objects[HERO_ID]->SetHight(0.f);
+	m_Objects[HERO_ID]->SetVelocity(0, 0, 0);
 	m_Objects[HERO_ID]->SetKind(KIND_HERO);
+	m_Objects[HERO_ID]->SetAcc(0, 0, 0);
+	m_Objects[HERO_ID]->SetForce(0, 0);
+	m_Objects[HERO_ID]->SetSize(0.5f, 0.5f);
+	m_Objects[HERO_ID]->SetMass(1.f);
+	m_Objects[HERO_ID]->SetColor(1.f, 1.f, 1.f);
+	m_Objects[HERO_ID]->SetFrictionCoef(0.2f);
+	m_Objects[HERO_ID]->Setstate(STATE_GROUND);
 
-	/*for (int i = 0; i < MAX_OBJECT; ++i)
-	{
-		x = rand() % 500;
-		y = rand() % 500;
-		m_Objects[i].Setpos(x, y, z);
-		m_Objects[i].SetVelocity(0, 0);
-		m_Objects[i].SetAcc(0, 0);
-		m_Objects[i].SetForce(0, 0);
-		m_Objects[i].SetSize(1.f, 1.f);
-		m_Objects[i].SetMass(3.f);
-		m_Objects[i].SetFrictionCoef(5.f);
-	}*/
 	//TEST ADDOBJ
-	AddObject(1.0f, 0.0f, 0.f, 1.f, 1.f, 0.f, 0.f);
+	AddObject(-4.f * 2, 0.f * 2, 0.f, 0.f, 0.4f * 2, 0.4f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(-2.5f * 2, 0.4f * 2, 0.f, 0.f, 0.35f * 2, 0.35f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(-1.6f * 2, -1.f * 2, 0.f, 0.f, 0.5f * 2, 0.5f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(-5.6f * 2, -1.6f * 2, 0.f, 0.f, 0.5f * 2, 0.5f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(-1.f * 2, 0.f * 2, 0.f, 1.f, 0.4f * 2, 0.4f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(-0.8f * 2, -2.3f * 2, 0.f, 1.f, 0.5f * 2, 0.5f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(2.f * 2, -1.55f * 2, 0.f, 1.f, 0.5f * 2, 0.5f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(1.f * 2, 1.f * 2, 0.f, 1.f, 0.35f * 2, 0.35f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(4.3f * 2, 0.8f * 2, 0.f, 0.f, 0.35f * 2, 0.35f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(5.9f * 2, -1.55f * 2, 0.f, 0.f, 0.5f * 2, 0.5f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	AddObject(0.23f * 2, 8.5f, 0.f, 0.f, 0.25f * 2, 0.25f * 2, 0.f, 0.f, 0.f, KIND_BUILDING, 10, STATE_GROUND);
+	
 
-	m_Renderer = new Renderer(500, 500);
+	m_Renderer = new Renderer(WINDOW_SIZE_X, WINDOW_SIZE_Y);
+
+	m_Sound = new Sound();
+	m_SoundBG = m_Sound->CreateSound("./sound/BG_BGM.mp3");
+	m_SoundFire = m_Sound->CreateSound("./sound/bell.wav");
+	m_SoundEX = m_Sound->CreateSound("./sound/laugh.mp3");
 
 	if (!m_Renderer->IsInitialized()) {
 		std::cout << "Renderer could not be initialized.. \n";
 	}
+	m_Sound->PlaySoundW(m_SoundBG, true, 20.f);
 
-	m_testTexture = m_Renderer->CreatePngTexture("cat.png"); //클래스나 구조체 형식으로 넘길 수 있게
+	m_santa = m_Renderer->CreatePngTexture("santa.png"); //클래스나 구조체 형식으로 넘길 수 있게
+	m_house = m_Renderer->CreatePngTexture("house.png"); //클래스나 구조체 형식으로 넘길 수 있게
+	m_gift = m_Renderer->CreatePngTexture("gift.png"); //클래스나 구조체 형식으로 넘길 수 있게
+	m_village = m_Renderer->CreatePngTexture("village.png"); //클래스나 구조체 형식으로 넘길 수 있게
 	m_explosionTexture = m_Renderer->CreatePngTexture("spritesheet1.png"); //클래스나 구조체 형식으로 넘길 수 있게
-
-
+	m_particle = m_Renderer->CreatePngTexture("particles.png");
 }
-
 
 ScnMgr::~ScnMgr()
 {
 }
 
-void ScnMgr::RenderScene()
-{
-	
-	//g_TestObj->Getpos(&x, &y);
-	//g_TestObj->GetSize(&width, &height);
-
-	// dirty: 더러워졌을때 업뎃
-	// 실시간으로 그리는건 무조건 1초에 60번씩. 계속update해야함. 1초에 60번 이상.
-	// 27.5프레임 영사기 영화가. 현재 하드웨어는 60정도. 휴대폰도 60. 60최초로 한회사는 애플의아이폰.
-	// 60번이상 호출이 되어야. 렌더씬 안에선 16밀리세컨안에 작업완료되어야. 
+void ScnMgr::RenderScene(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f); 
-	//바탕색 바꾸기
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f); //바탕색 바꾸기
 
-	// 센터 0,0 -250 ~ 250
-	// Renderer Test
-
-	//static 불리고 안불리고의 차이?
-	//원그리기
-	//x = sin(g_Time)*100.f;
-	//y = cos(g_Time)*100.f;
-	//g_Time += 0.01f;
-	//float cur_y = 0, cur_x = 0;
-	//float x, y, z;
-	//m_TestObj->Getpos(&x, &y, &z);
-	//float width , height;
-	//m_TestObj->GetSize(&width, &height);
-	//1m --> 100pixel
-	//m_Renderer->DrawSolidRect(x, y, 0, 1, 10, 0, 1, 1); // 네모 속성 바꾸기 가능
-
-	//m_Renderer->DrawSolidRect(x*100.f, y*100.f, 0, width*100.f,height*100.f, 1, 1, 1, 1); // 네모 속성 바꾸기 가능
-	//m_Renderer->DrawTextureRect(x*100.f, y*100.f, 0, width*100.f, height*100.f, 1, 1, 1, 1, m_testTexture); // 네모 속성 바꾸기 가능
+	m_Renderer->DrawTextureRectHeight(0, 0 - 225, 0, 2 * WINDOW_SIZE_X, 2 * WINDOW_SIZE_Y, 1, 1, 1, 1, m_village, 0); // 네모 속성 바꾸기 가능
 
 	if (g_Seq > 80) g_Seq = 0;
 
@@ -107,111 +77,204 @@ void ScnMgr::RenderScene()
 		{
 			float x, y, z;
 			m_Objects[i]->Getpos(&x, &y, &z);
-			
+
 			float width, height;
 			m_Objects[i]->GetSize(&width, &height);
-			
-			
-			float newZ = z * 100;
+
+			float r, g, b;
+			m_Objects[i]->GetColor(&r, &g, &b);
+
+			KIND kind;
+			m_Objects[i]->GetKind(&kind);
+
+			float newX = x * 100.f;
+			float newY = y * 100.f;
+			float newZ = z * 100.f;
 			float newH = height * 100;
 			float newW = width * 100;
 
+			if (kind == KIND_HERO) {
+				//m_Renderer->DrawTextureRectHeight(newX, newY, 0, 10, 10, r, g, b, 1.f, m_village, newZ);
+				m_Renderer->SetCameraCenterPos(newX, newY);
+				//m_Renderer->DrawSolidRectGauge(newX, newY + newH * 100.f, 0, newW * 30.f, 10.f, 1, 1, 1, 1, newZ, 1.f);
+			}
+
+			//스프라이트 이미지
 			int seqX = 0;
 			int seqY = 0;
 			seqX = g_Seq % 9;
 			seqY = (int)g_Seq / 9;
-			g_Seq++;
+			g_Seq ++;
 			if (g_Seq > 80) g_Seq = 0;
 
-			m_Renderer->DrawTextureRectHeight(x*100.f, y*100.f, 0, width*100.f, height*100.f, 1, 1, 1, 1, m_testTexture, z * 100.f); // 네모 속성 바꾸기 가능
+			//if (kind == KIND_BULLET)		m_Renderer->DrawTextureRectSeqXY(x*100.f, y*100.f + 50.f, newZ, newH, newW, r, g, b, 1, m_explosionTexture, seqX, seqY, 9, 9);
+			//if (kind == KIND_BULLET)		m_Renderer->DrawTextureRectHeight(x*100.f, y*100.f, 0, width * 100.f, height * 100.f, r, g, b, 1, m_santa, z * 100.f); // 네모 속성 바꾸기 가능
+			if (kind == KIND_HERO)		m_Renderer->DrawTextureRectHeight(x*100.f, y*100.f - 50.f, 0, width * 100.f, height * 100.f, r, g, b, 1, m_santa, z * 100.f); // 네모 속성 바꾸기 가능
+			if (kind == KIND_BULLET)		m_Renderer->DrawTextureRectHeight(x*100.f, y*100.f - 50.f, 0, width * 100.f, height * 100.f, r, g, b, 1, m_gift, z * 100.f); // 네모 속성 바꾸기 가능
+			if (kind == KIND_BUILDING) {
+				m_Renderer->DrawTextureRectHeight(x*100.f, y*100.f - 50.f, 0, width * 100.f, height * 100.f, r, g, b, 1, m_house, z * 100.f); // 네모 속성 바꾸기 가능
+				m_Renderer->DrawSolidRectGauge(newX, newY + newH * 8.f, 0, 3000.f, 1000.f, 1, 1, 1, 1, newZ, 0.5f);
 
-			m_Renderer->DrawTextureRectSeqXY(x*100.f, y*100.f + 100.f, newZ, newH, newW, 1, 1, 1, 1, m_explosionTexture, seqX, seqY, 9, 9);
+			}
 		}
 	}
-	//cout << x << y << width << height << endl;
-	//cout<<m_TestObj->Getpos<<m_TestObj->GetSize<<
-	//set하기 x그리는곳에선 그리는거만. 
-	//걷는건 3000 m/s
 }
-void ScnMgr::Update(float fTimeElapsed)
-{
-	// 업데이트에서 현재 속도 겟한다음
-	// 현재 포지션 + 속도 * 시간
-	// 속도 set
-	// 시간: 1/60f
+
+void ScnMgr::Update(float fTimeElapsed){
 	for (int i = 0; i < MAX_OBJECT; ++i)
 	{
-		if(m_Objects[i]) m_Objects[i]->Update(fTimeElapsed);
+		if (m_Objects[i]) {
+			m_Objects[i]->Update(fTimeElapsed);		
+		}
 	}
-	/*float x = 0, y = 0;
-	m_TestObj->Getpos(&x, &y);
-	float vx = 0, vy = 0;
-	m_TestObj->GetVelocity(&vx, &vy);
-	float dstx, dsty;
-	dstx = x + vx * (1.f / 60.0f);
-	dsty = y + vy * (1.f / 60.0f);*/
-	//dstx = dstx * 100.0f;
-	//dsty = dsty * 100.0f;
 
-	// 왜 프레임이 달라? 코드상에서 제약 걸어놓지 않아도 유지가 되기도 한다. 노트북마다 다달라
-	// 이걸 어떻게 해결? 1. 업데이트or 렌더씬을 강제로 1/60에만 그려지게 막는다. 
-	// 5더하는거 5근본없음. 업데이트안에서 시간고려하지 않는거 별로. 
-	// 노트북은 적당한 속도 튜닝해도 강의실pc랑은 다르고.
-	// 유근본 --> 공통적으로 적용되는 법칙. 물리법칙. 
-	//m_TestObj->SetSize(10, 10);
-	////m_TestObj->Setpos(x + t * tempSpeed, y + t * tempSpeed);
-	//m_TestObj->Setpos(dstx, dsty);
+	{
+		float hero_x, hero_y, hero_z;
+		m_Objects[HERO_ID]->Getpos(&hero_x, &hero_y, &hero_z);
+		hero_y = (hero_y - 15.f) * -0.05f;
+		
+		float hero_size_x, hero_size_y;
+		hero_size_x = hero_y;
+		hero_size_y = hero_y;
 
-	//if (temp > 100.f) 
-	//	temp = 0.0f;
-	// 한 픽셀은 1cm 픽셀단위로 받게 되어 있음. 좌표가 00인 미터단위의 위치
-	//속도도 m/s, 위치도 m 현재위치에서 계산된게 1m다 하면 
-}
-void ScnMgr::ApplyForce(float x, float y, DWORD eTime)
-{
-	//for (int i = 0; i<MAX_OBJECT; ++i)
-	//	m_Objects[i]->ApplyForce(x, y, eTime);
-	m_Objects[HERO_ID]->ApplyForce(x, y, eTime);
-
-	//m_TestObj->ApplyForce(x, y, eTime);
+		m_Objects[HERO_ID]->SetSize(hero_size_x, hero_size_y);
+	}
 }
 
-void ScnMgr::AddObject(float pX, float pY, float pZ, float sX, float sY, float vX, float vY)
-{
+void ScnMgr::UpdateCollision(){
+
+	for (int i = 0; i < MAX_OBJECT; i++) {
+		int collisionCount = 0;
+		if (m_Objects[i] == nullptr)
+			continue;
+		float minX, maxX, minY, maxY = 0.f;
+		float pX, pY, pZ, sX, sY = 0.f;
+		m_Objects[i]->Getpos(&pX, &pY, &pZ);
+		m_Objects[i]->GetSize(&sX, &sY);
+
+		minX = pX - sX / 2.f;
+		maxX = pX + sX / 2.f;
+		minY = pY - sY / 2.f;
+		maxY = pY + sY / 2.f;
+
+		for (int j = 1; j < MAX_OBJECT; j++) {
+			if (m_Objects[j] == nullptr)
+				continue;
+
+			if (i == j)
+				continue;
+
+
+			float minX1, maxX1, minY1, maxY1 = 0.f;
+
+			m_Objects[j]->Getpos(&pX, &pY, &pZ);
+			m_Objects[j]->GetSize(&sX, &sY);
+
+			minX1 = pX - sX / 2.f;
+			maxX1 = pX + sX / 2.f;
+			minY1 = pY - sY / 2.f;
+			maxY1 = pY + sY / 2.f;
+
+			if (RRCollision(minX, maxX, minY, maxY, minX1, maxX1, minY1, maxY1)) {
+				collisionCount++;
+				processCollision(i, j);
+			}
+		}
+		if (collisionCount > 0) {//맞으면 빨강으로 색전환
+			KIND kind;
+			m_Objects[i]->GetKind(&kind);
+			if (kind != KIND_BULLET && kind != KIND_HERO) {
+				//m_Objects[i]->SetColor(1.f, 0.f, 0.f);
+				m_Sound->PlaySoundW(m_SoundFire, false, 3.f);
+			}
+		}
+		else {//안맞으면 원래으로 색전환
+			/*KIND kind;
+			m_Objects[i]->GetKind(&kind);
+			if (kind != KIND_BULLET)
+				m_Objects[i]->SetColor(1.f, 1.f, 1.f);*/
+		}
+	}
+}
+void ScnMgr::ApplyForce(float x, float y,float z, DWORD eTime){
+	STATE state;
+	m_Objects[HERO_ID]->Getstate(&state);
+
+	if (state == STATE_AIR) {
+		z = 0.f;
+	}
+	m_Objects[HERO_ID]->ApplyForce(x, y, z, eTime);
+}
+
+void ScnMgr::DoGarbagecollet(){
+	for (int i = 0; i < MAX_OBJECT; i++) {
+		if (m_Objects[i] == NULL)
+			continue;
+
+		int hp;
+		KIND kind;
+		float vel, vx, vy, vz, px, py, pz;
+		m_Objects[i]->GetHP(&hp);
+		m_Objects[i]->GetKind(&kind);
+
+		m_Objects[i]->GetVelocity(&vx, &vy, &vz);
+		m_Objects[i]->Getpos(&px, &py, &pz);
+
+		vel = sqrtf(vx*vx + vy * vy + vz * vz);
+
+		//check velocity
+		if (vel < FLT_EPSILON && kind == KIND_BULLET) {
+			DeleteObject(i);
+			continue;
+		}
+
+		//check HP
+		if (hp <= 0 && kind && (kind == KIND_BULLET || kind == KIND_BUILDING)) {
+			if(kind == KIND_BUILDING)				m_Sound->PlaySoundW(m_SoundEX, false, 3.f);
+			DeleteObject(i);
+			continue;
+		}
+
+		if (px < -BULLET_ACCESS_X || BULLET_ACCESS_X < px || py < -BULLET_ACCESS_Y || BULLET_ACCESS_Y < py) {
+			if (kind == KIND_BULLET) {
+				DeleteObject(i);
+				continue;
+			}
+		}
+	}
+}
+
+void ScnMgr::AddObject(float pX, float pY, float pZ, float hight, float sX, float sY, float vX, float vY,float vZ, KIND kind, int hp, STATE state){
 
 	int index = FindObjectSlot();
-
-	if (index < 0)
-	{
+	if (index < 0)	{
 		cout << "Can't create object with minus index" << endl;
 		return ;
 	}
-	//m_Objects[index] = new Object();
-
 	m_Objects[index] = new Object();
 	m_Objects[index]->Setpos(pX, pY, pZ);
-	m_Objects[index]->SetVelocity(vX, vY);
-	m_Objects[index]->SetAcc(0, 0);
+	m_Objects[index]->SetHight(hight);
+	m_Objects[index]->SetVelocity(vX, vY, vZ);
+	m_Objects[index]->SetKind(kind);
+	m_Objects[index]->SetAcc(0, 0, 0);
 	m_Objects[index]->SetForce(0, 0);
 	m_Objects[index]->SetSize(sX, sY);
 	m_Objects[index]->SetMass(3.f);
 	m_Objects[index]->SetFrictionCoef(5.f);
-
+	m_Objects[index]->SetColor(1.f, 1.f, 1.f);
+	m_Objects[index]->SetHP(hp);
+	m_Objects[index]->Setstate(state);
 }
 
-void ScnMgr::DeleteObject(unsigned int id)
-{
-	if (m_Objects[id])
-	{
+void ScnMgr::DeleteObject(unsigned int id){
+	if (m_Objects[id])	{
 		delete m_Objects[id];
 		m_Objects[id] = NULL;
 	}
 }
 
-int ScnMgr::FindObjectSlot()
-{
-	for (int i = 0; i < MAX_OBJECT; ++i)
-	{
+int ScnMgr::FindObjectSlot(){
+	for (int i = 0; i < MAX_OBJECT; ++i)	{
 		if (m_Objects[i] == NULL) return i;
 	}
 
@@ -219,40 +282,99 @@ int ScnMgr::FindObjectSlot()
 	return -1;
 }
 
-void ScnMgr::Shoot(int shootID) {
+void ScnMgr::Shoot(int shootID, DWORD fTimeElapsed) {
 	if (shootID == SHOOT_NONE)		return;
+	Create_Bullet_sum += fTimeElapsed;
+	if (Create_Bullet_sum < SHOOTING_TIME)	return;
+	Create_Bullet_sum -= SHOOTING_TIME;
+	
 	float px, py, pz;
+	float size_x, size_y;
+	float hight;
 	float sx, sy;
-	float vx, vy;
+	float vx, vy, vz;
 
-//	m_Objects
+    //m_Objects 
 	m_Objects[HERO_ID]->Getpos(&px, &py,&pz);
-	sx = 0.1f;
-	sy = 0.1f;
+	m_Objects[HERO_ID]->GetSize(&size_x, &size_y);
+	m_Objects[HERO_ID]->GetHight(&hight);
+	m_Objects[HERO_ID]->GetVelocity(&vx, &vy, &vz);
 
-	m_Objects[HERO_ID]->GetVelocity(&vx, &vy);
 	// 총알속도
-	float amount = 10.f;
+	float amount = 15.f;
+	
 	switch (shootID){
 	case SHOOT_LEFT:
 			vx -= amount;
-			vy += amount;
+			vy += 0.f;
 			break;
 	case SHOOT_RIGHT:
 		vx += amount;
-		vy += amount;
+		vy += 0.f;
 		break;
 	case SHOOT_UP:
-		vx += amount;
+		vx += 0.f;
 		vy += amount;
 		break;
 	case SHOOT_DOWN:
-		vx += amount;
+		vx += 0.f;
 		vy -= amount;
 		break;
 	}
 
+	sx =  size_x * 3 / 5;
+	sy =  size_x * 3 / 5;
 
-	AddObject(px, py, pz, sx, sy, vx, vy);
+	AddObject(px, py + size_y / 4, 0.1, hight, sx, sy, vx, vy, vz, KIND_BULLET, 1, STATE_GROUND);
+	//m_Sound->PlaySoundW(m_SoundFire, false, 1.f);
 }
 
+bool ScnMgr::RRCollision(float minX, float maxX, float minY, float maxY, float minX1, float maxX1, float minY1, float maxY1){
+	if (minX > maxX1) return false;
+	if (maxX < minX1) return false;
+	if (minY > maxY1) return false;
+	if (maxY < minY1) return false;
+	return true;
+}
+
+bool ScnMgr::IsCollision(float minx, float miny, float maxx, float maxy, float minx1, float miny1, float maxx1, float maxy1){
+	if (maxx <= minx1)	return false;
+	if (minx >= maxx1)	return false;
+	if (maxy <= maxy1)	return false;
+	if (miny >= maxy1)	return false;
+	return true;
+}
+
+void ScnMgr::processCollision(int i, int j){
+	
+	Object* obj1 = m_Objects[i];
+	Object* obj2 = m_Objects[j];
+
+	if (obj1 == NULL || obj2 == NULL)	{
+		std::cout << "obj" << i << " ,obj" << j << "\n";
+	}
+
+	KIND Kindobj1, kindobj2;
+	obj1->GetKind(&Kindobj1);
+	obj2->GetKind(&kindobj2);
+
+	if (Kindobj1 == KIND_HERO || kindobj2 == KIND_HERO)	return;
+
+	if (Kindobj1 == KIND_BUILDING && kindobj2 == KIND_BULLET){
+		int hp1, hp2;
+		obj1->GetHP(&hp1);
+		obj2->GetHP(&hp2);
+		int newHP = hp1 - hp2;
+		obj1->SetHP(newHP);
+		obj2->SetHP(0);
+	}
+
+	if (Kindobj1 == KIND_BULLET && kindobj2 == KIND_BUILDING) {
+		int hp1, hp2;
+		obj1->GetHP(&hp1);
+		obj2->GetHP(&hp2);
+		int newHP = hp2 - hp1;
+		obj1->SetHP(0);
+		obj2->SetHP(newHP);
+	}
+}

@@ -1,14 +1,17 @@
 #pragma once
 #define HERO_ID 0
 
-#define MAX_OBJECT 300
+#define MAX_OBJECT 1000
 
-#define KIND_HERO 0
-#define KIND_BULLET 1
+#define WINDOW_SIZE_X 1600
+#define WINDOW_SIZE_Y 900
 
-//#define SHOOT_NONE -1
-//#define SHOOT_LEFT 1
-//#define SHOOT_RIGHT 2
-//#define SHOOT_UP 3
-//#define SHOOT_DOWN 4
+#define BULLET_ACCESS_X 8.0 * 2
+#define BULLET_ACCESS_Y 6.0 * 2
+
+#define GRAVITY 9.8
+#define SHOOTING_TIME 150
+
 enum SHOOT_ { SHOOT_NONE = -1, SHOOT_LEFT = 1, SHOOT_RIGHT = 2, SHOOT_UP = 3, SHOOT_DOWN = 4 };
+enum KIND	{KIND_HERO = 1, KIND_BULLET = 2, KIND_BUILDING = 3};
+enum STATE {STATE_GROUND, STATE_AIR};

@@ -16,9 +16,6 @@ but WITHOUT ANY WARRANTY.
 #include "ScnMgr.h"
 #include "Global.h"
 
-//ScnMgr* a;
-//int a;
-//int a = 50;
 DWORD g_prevElipsedTime = 0.f;
 ScnMgr *g_ScnMgr = NULL;
 
@@ -26,12 +23,14 @@ bool g_KeyW = false;
 bool g_KeyA = false;
 bool g_KeyS = false;
 bool g_KeyD = false;
+bool g_KeySP = false;
 
 // bullet
 SHOOT_ g_Shoot = SHOOT_NONE;
+int type = 0;
+bool exist = false;
 
-void RenderScene(void)
-{
+void RenderScene(void){
 	if (g_prevElipsedTime == 0.f) g_prevElipsedTime = timeGetTime(); //Init
 
 	//get ElipsedTime
@@ -41,213 +40,98 @@ void RenderScene(void)
 	float eTiME = (float)fTimeElapsed / 1000.f; // convet to sec
 
 	//g_ScnMgr->ApplyForce()
-	float forceX= 0.f, forceY = 0.f;
-	float amount = 0.002f;
-	if (g_KeyW)
-	{
-		forceY += amount;
-	}
-	if (g_KeyD)
-	{
-		forceX += amount;
-	}
-	if (g_KeyA)
-	{
-		forceX -= amount;
-	}
-	if (g_KeyS)
-	{
-		forceY -= amount;
-	}
-	g_ScnMgr->ApplyForce(forceX, forceY, fTimeElapsed);
-	g_ScnMgr->RenderScene();
-	g_ScnMgr->Update(eTiME);
-	//cout << "elapsedTime" << eTiME << endl;
-	/*float fimeElapsed = timeGetTime();*/
-	glutSwapBuffers();
+	float forceX= 0.f, forceY = 0.f, forceZ = 0.f;
+	float amount = 0.003f;
+	float amountz = 0.5f;
 
-}
-
-void Idle(void)
-{
-	// 아무것도 안했을 때 계속 렌더씬 불러줌
-	//float fTimeElapsed = timeGetTime();
-	//if (g_prevElipsedTime < 0.f) g_prevElipsedTime = timeGetTime(); //Init
-
-	//																//get ElipsedTime
-	//float cur_fimeElapsed = timeGetTime();
-	//float fTimeElapsed = cur_fimeElapsed - g_prevElipsedTime;// timeGetTime() - g_prevElipsedTime;
-	//g_prevElipsedTime = cur_fimeElapsed;
-	//fTimeElapsed /= 1000.f; // convet to sec
-
-	//g_ScnMgr->Update(fTimeElapsed);
-	// 1초에 60번이상 동작해야함.
-	RenderScene();
-}
-
-void MouseInput(int button, int state, int x, int y)
-{
-	RenderScene();
-}
-
-void KeyDownInput(unsigned char key, int x, int y)
-{
-	//key 값과 그때의 마우스값
-	//if (key == 'w') cout << "지금 w가 눌렸음 이때 x, y " << x << ", " << y<<")";
-	/*int amount = 5;
-	switch (key)
-	{
-	case 'W':
-	case 'w':
-		cout << "w" << endl;
-		cur_y += 5;
-		break;
-	case 'S':
-	case 's':
-		cout << "s" << endl;
-
-		cur_y -= 5;
-		break;
-	case 'D':
-	case 'd':
-		cout << "d" << endl;
-		cur_x += 5;
-		break;
-	case 'A':
-	case 'a':
-		cout << "a" << endl;
-		cur_x -= 5;
-		break;
-	}*/
-
-	switch (key)
-	{
-	case 'w':
-	case 'W':
-		g_KeyW = true;
-		cout << "W: " << g_KeyW << "A: " << g_KeyA << "S: " << g_KeyS << "D: " << g_KeyD << endl;
-
-		//g_ScnMgr->ApplyForce(0.f, amount);
-		break;
-	case 'a':
-	case 'A':
-		g_KeyA = true;
-		cout << "W: " << g_KeyW << "A: " << g_KeyA << "S: " << g_KeyS << "D: " << g_KeyD << endl;
-
-		//g_ScnMgr->ApplyForce(-amount, 0.f);
-		break;
-	case 's':
-	case 'S':
-		g_KeyS = true;
-		cout << "W: " << g_KeyW << "A: " << g_KeyA << "S: " << g_KeyS << "D: " << g_KeyD << endl;
-
-		//g_ScnMgr->ApplyForce(0.f, -amount);
-		break;
-	case 'd':
-	case 'D':
-		g_KeyD = true;
-		cout << "W: " << g_KeyW << "A: " << g_KeyA << "S: " << g_KeyS << "D: " << g_KeyD << endl;
-
-		//g_ScnMgr->ApplyForce(amount, 0.f);
-		break;
-	}
+	if (g_KeyW)	forceY += amount;
+	if (g_KeyD)	forceX += amount;
+	if (g_KeyA)	forceX -= amount;
+	if (g_KeyS)	forceY -= amount;
+	if (g_KeyS)	forceY -= amount;
+	//if (g_KeySP) forceZ += amountz;
 	
-	//RenderScene();
+	g_ScnMgr->ApplyForce(forceX, forceY, forceZ, fTimeElapsed);
+	g_ScnMgr->RenderScene();
+	g_ScnMgr->Shoot(g_Shoot, fTimeElapsed);
+	g_ScnMgr->Update(eTiME);
+	g_ScnMgr->UpdateCollision();
+	g_ScnMgr->DoGarbagecollet();
+
+	glutSwapBuffers();
 }
-void KeyUpInput(unsigned char key, int x, int y)
-{
-	//key 값과 그때의 마우스값
-	//if (key == 'w') cout << "지금 w가 눌렸음 이때 x, y " << x << ", " << y<<")";
-	/*int amount = 5;
-	switch (key)
-	{
-	case 'W':
-	case 'w':
-	cout << "w" << endl;
-	cur_y += 5;
-	break;
-	case 'S':
-	case 's':
-	cout << "s" << endl;
 
-	cur_y -= 5;
-	break;
-	case 'D':
-	case 'd':
-	cout << "d" << endl;
-	cur_x += 5;
-	break;
-	case 'A':
-	case 'a':
-	cout << "a" << endl;
-	cur_x -= 5;
-	break;
-	}*/
+void Idle(void){
+	RenderScene();
+}
 
+void MouseInput(int button, int state, int x, int y){
+	RenderScene();
+}
 
-	//float amount = 4.f;
-	switch (key)
-	{
-	case 'w':
-	case 'W':
-		g_KeyW = false;
+void KeyDownInput(unsigned char key, int x, int y){
+	switch (key)	{
+	case 'w':	case 'W':		 g_KeyW = true;
 		break;
-	case 'a':
-	case 'A':
-		g_KeyA = false;
+	case 'a':	case 'A':		 g_KeyA = true;
 		break;
-	case 's':
-	case 'S':
-		g_KeyS = false;
+	case 's':	case 'S':		 g_KeyS = true;
 		break;
-	case 'd':
-	case 'D':
-		g_KeyD = false;
+	case 'd':	case 'D':		 g_KeyD = true;
+		break;
+	case ' ':	
+
+			g_KeySP = true;
+
 		break;
 	}
-
-	//RenderScene();
 }
+
+void KeyUpInput(unsigned char key, int x, int y){
+	switch (key)	{
+	case 'w':	case 'W':		 g_KeyW = false;
+		break;
+	case 'a':	case 'A':		 g_KeyA = false;
+		break;
+	case 's':	case 'S':		 g_KeyS = false;
+		break;
+	case 'd':	case 'D':		 g_KeyD = false;
+		break;
+	case ' ':		g_KeySP = false;
+		break;
+	}
+}
+
 void SpecialKeyDownInput(int key, int x, int y){
 	switch (key){
-	case GLUT_KEY_LEFT:
-		g_Shoot = SHOOT_LEFT;
+	case GLUT_KEY_LEFT:		 g_Shoot = SHOOT_LEFT;
 		break;
-	case GLUT_KEY_RIGHT:
-		g_Shoot = SHOOT_RIGHT;
+	case GLUT_KEY_RIGHT:		 g_Shoot = SHOOT_RIGHT;
 		break;
-	case GLUT_KEY_UP:
-		g_Shoot = SHOOT_UP;
+	case GLUT_KEY_UP:		 g_Shoot = SHOOT_UP;
 		break;
-	case GLUT_KEY_DOWN:
-		g_Shoot = SHOOT_DOWN;
+	case GLUT_KEY_DOWN:	 g_Shoot = SHOOT_DOWN;
 		break;
 	}
-
-	RenderScene();
 }
 
 void SpecialKeyUpInput(int key, int x, int y){
 	g_Shoot = SHOOT_NONE;
-	RenderScene();
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
 	// Initialize GL things
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(500, 500);
+	glutInitWindowSize(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 	glutCreateWindow("Game Software Engineering KPU");
 
 	glewInit();
-	if (glewIsSupported("GL_VERSION_3_0"))
-	{
+	if (glewIsSupported("GL_VERSION_3_0"))	{
 		std::cout << " GLEW Version is 3.0\n ";
 	}
-	else
-	{
+	else	{
 		std::cout << "GLEW 3.0 not supported\n ";
 	}
 
@@ -263,9 +147,12 @@ int main(int argc, char **argv)
 	glutSpecialFunc(SpecialKeyDownInput);
 	glutSpecialUpFunc(SpecialKeyUpInput);
 
+
 	g_ScnMgr = new ScnMgr;
+
 	glutMainLoop();
 	//timeGettime
+
 	delete g_ScnMgr;
 
     return 0;
